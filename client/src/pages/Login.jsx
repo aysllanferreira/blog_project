@@ -32,6 +32,9 @@ function Login() {
     try {
       const response = await loginUser(user);
       if (response.status === 200) {
+        // Save the token in session Storage
+        sessionStorage.setItem('token', response.data.token);
+        // Redirect to the welcome page
         setRedirect(true);
       }
     } catch (error) {
