@@ -115,7 +115,7 @@ export const loginUser = async (req, res) => {
   if (!verifyPassword) return res.status(400).json({ message: 'Email or password is incorrect' });
 
   try {
-    const token = jwt.sign({ id: verifyEmail._id }, process.env.JWT_SECRET, { expiresIn: '10' });
+    const token = jwt.sign({ id: verifyEmail._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
     // Header: Authorization
     res.setHeader('Authorization', `Bearer ${token}`);
     res.status(200).json({
@@ -134,11 +134,13 @@ export const loginUser = async (req, res) => {
 export const getUser = async (req, res) => {
   const { id } = req.params;
 
-  console.log(req);
-
   // Verify Bearer Token
   if (!req.headers.authorization) return res.status(401).json({ message: 'Unauthorized kkkk' });
   const token = req.headers.authorization.split(' ')[1];
+
+  // token is expired
+  const expired = jwt.decode(token, process.env.JWT_SECRET);
+  if (expired.exp * 1000 < new Date().getTime()) return res.status(401).json({ message: 'Unauthorized!!!' });
 
   const isCustomAuth = token.length < 500;
 
@@ -151,6 +153,7 @@ export const getUser = async (req, res) => {
   } else decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
   if (!decodedData?.id) return res.status(401).json({ message: 'Unauthorized!!!' });
+  // check if token is expired
 
   try {
     const user = await User.findById(id);

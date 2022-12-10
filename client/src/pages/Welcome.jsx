@@ -7,12 +7,17 @@ function Welcome() {
 
   useEffect(() => {
     if (sessionStorage.getItem('token')) {
+      // check if token is valid
       privateRoute()
         .then((response) => {
-          console.log(response);
+          if (response.status === 200) {
+            console.log('Welcome');
+          }
         })
         .catch((error) => {
           console.log(error);
+          setRedirect(true);
+          sessionStorage.removeItem('token');
         });
     } else {
       setRedirect(true);
