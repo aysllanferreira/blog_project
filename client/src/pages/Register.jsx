@@ -135,7 +135,7 @@ function Register() {
             </div>
           </form>
           {errors.error && (
-            <div className="mt-4 text-sm text-red-600 font-bold text-center text-lg">
+            <div className="mt-4 text-red-600 font-bold text-center text-lg">
               {errors.message}
             </div>
           )}
