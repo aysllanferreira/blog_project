@@ -17,7 +17,7 @@ function MyProfile({ getUser }) {
   };
 
   return (
-    <div>
+    <section className="h-screen bg-gray-100/50">
       <h1>My Profile</h1>
       <button
         type="button"
@@ -55,7 +55,7 @@ function MyProfile({ getUser }) {
           )}
         </div>
       ))}
-    </div>
+    </section>
   );
 }
 
