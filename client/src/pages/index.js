@@ -4,8 +4,9 @@ import Register from './Register';
 import Welcome from './Logged/Welcome';
 import NotFound from './NotFound';
 import LogOut from './Logged/LogOut';
+import MyProfile from './Logged/MyProfile';
 
 export {
   Home, Login, Register, Welcome, NotFound,
-  LogOut,
+  LogOut, MyProfile,
 };

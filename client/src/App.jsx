@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { privateRoute } from './api';
 import {
   Home, Login, Register, Welcome, NotFound,
-  LogOut,
+  LogOut, MyProfile,
 } from './pages';
 import Navbar from './components/navbar/Navbar';
 
@@ -14,9 +14,8 @@ function App() {
     if (sessionStorage.getItem('token') !== null) {
       // check if token is valid
       privateRoute()
-        .then((response) => {
-          if (response.status === 200) {
-            console.log('Welcome');
+        .then((res) => {
+          if (res.status === 200) {
             setRedirect(false);
           }
         })
@@ -24,6 +23,7 @@ function App() {
           console.log(error);
           setRedirect(true);
           sessionStorage.removeItem('token');
+          sessionStorage.removeItem('user');
         });
     } else {
       setRedirect(true);
@@ -37,10 +37,11 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
-        {!redirect ? (
-          <Route exact path="/welcome" component={Welcome} />
-        ) : (
-          <Route exact path="/welcome" component={Login} />
+        {!redirect && (
+          <div>
+            <Route exact path="/welcome" component={Welcome} />
+            <Route exact path="/myprofile" component={MyProfile} />
+          </div>
         )}
         <Route exact path="/logout" component={LogOut} />
         <Route component={NotFound} />

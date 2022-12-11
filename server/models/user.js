@@ -13,6 +13,24 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  image: {
+    type: String,
+  },
+  age: {
+    type: Number,
+  },
+  bio: {
+    type: String,
+  },
+  linkedin: {
+    type: String,
+  },
+  github: {
+    type: String,
+  },
+  instagram: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: new Date(),

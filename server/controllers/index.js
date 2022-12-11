@@ -118,9 +118,15 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: verifyEmail._id }, process.env.JWT_SECRET, { expiresIn: '24h' });
     // Header: Authorization
     res.setHeader('Authorization', `Bearer ${token}`);
+    const getToken = jwt.decode(token, process.env.JWT_SECRET);
+    const getId = getToken.id;
+    const user = await User.findById(getId);
+    const { id } = user;
+
     res.status(200).json({
       message: 'User logged in successfully',
       token,
+      id,
     });
   } catch (error) {
     res.status(500).json({
@@ -132,15 +138,14 @@ export const loginUser = async (req, res) => {
 // Private Route Bearer Token
 
 export const getUser = async (req, res) => {
-  const { id } = req.params;
-
   // Verify Bearer Token
-  if (!req.headers.authorization) return res.status(401).json({ message: 'Unauthorized kkkk' });
+  if (!req.headers.authorization) return res.status(401).json({ message: 'Unauthorized' });
   const token = req.headers.authorization.split(' ')[1];
 
   // token is expired
-  const expired = jwt.decode(token, process.env.JWT_SECRET);
-  if (expired.exp * 1000 < new Date().getTime()) return res.status(401).json({ message: 'Unauthorized!!!' });
+  const getToken = jwt.decode(token, process.env.JWT_SECRET);
+  if (getToken.exp * 1000 < new Date().getTime()) return res.status(401).json({ message: 'Unauthorized!!!' });
+  const { id } = getToken;
 
   const isCustomAuth = token.length < 500;
 
@@ -156,11 +161,30 @@ export const getUser = async (req, res) => {
   // check if token is expired
 
   try {
-    const user = await User.findById(id);
-
     res.status(200).json({
       message: 'User fetched successfully',
-      user,
+      id,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const fetchUserById = async (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const getToken = jwt.decode(token, process.env.JWT_SECRET);
+  const getId = getToken.id;
+  const user = await User.findById(getId);
+  const { username, email } = user;
+
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  try {
+    res.status(200).json({
+      username,
+      email,
     });
   } catch (error) {
     res.status(500).json({
