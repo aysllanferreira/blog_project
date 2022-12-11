@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { privateRoute } from './api';
 import {
   Home, Login, Register, Welcome, NotFound,
-  LogOut, MyProfile,
+  LogOut, MyProfile, EditProfile,
 } from './pages';
 import Navbar from './components/navbar/Navbar';
 
@@ -41,6 +41,7 @@ function App() {
           <div>
             <Route exact path="/welcome" component={Welcome} />
             <Route exact path="/myprofile" component={MyProfile} />
+            <Route exact path="/editprofile" component={EditProfile} />
           </div>
         )}
         <Route exact path="/logout" component={LogOut} />

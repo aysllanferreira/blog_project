@@ -22,6 +22,15 @@ const userSchema = mongoose.Schema({
   bio: {
     type: String,
   },
+  city: {
+    type: String,
+  },
+  state: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
   linkedin: {
     type: String,
   },
@@ -29,6 +38,9 @@ const userSchema = mongoose.Schema({
     type: String,
   },
   instagram: {
+    type: String,
+  },
+  website: {
     type: String,
   },
   createdAt: {

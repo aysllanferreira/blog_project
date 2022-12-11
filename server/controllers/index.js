@@ -177,7 +177,9 @@ export const fetchUserById = async (req, res) => {
   const getToken = jwt.decode(token, process.env.JWT_SECRET);
   const getId = getToken.id;
   const user = await User.findById(getId);
-  const { username, email } = user;
+  const {
+    username, email, bio, image, city, state, country, linkedin, github, instagram, website, age,
+  } = user;
 
   if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -185,6 +187,55 @@ export const fetchUserById = async (req, res) => {
     res.status(200).json({
       username,
       email,
+      bio,
+      image,
+      city,
+      state,
+      country,
+      linkedin,
+      github,
+      instagram,
+      website,
+      age,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Something went wrong',
+    });
+  }
+};
+
+export const updateUser = async (req, res) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const getToken = jwt.decode(token, process.env.JWT_SECRET);
+  const getId = getToken.id;
+  const user = await User.findById(getId);
+
+  const {
+    username, email, image, age, bio, city, state, country,
+    linkedin, github, instagram, website,
+  } = req.body;
+
+  if (!user) return res.status(404).json({ message: 'User not found' });
+
+  try {
+    await User.findByIdAndUpdate(getId, {
+      username,
+      email,
+      image,
+      age,
+      bio,
+      city,
+      state,
+      country,
+      linkedin,
+      github,
+      instagram,
+      website,
+    });
+
+    res.status(200).json({
+      message: 'User updated successfully',
     });
   } catch (error) {
     res.status(500).json({

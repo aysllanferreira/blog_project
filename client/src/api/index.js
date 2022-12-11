@@ -16,3 +16,10 @@ export const fetchUserById = () => axios.get(`${url}/fetchUser`, {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     },
 });
+
+export const updateUser = (updatedUser) => axios.put(`${url}/update`, updatedUser, {
+  headers:
+      {
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+      },
+});
