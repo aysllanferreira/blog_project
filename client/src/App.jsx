@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import { privateRoute, fetchUserById } from './api';
 import {
   Home, Login, Register, Welcome, NotFound,
-  LogOut, MyProfile, EditProfile,
+  LogOut, MyProfile, EditProfile, Footer,
 } from './pages';
 import Navbar from './components/navbar/Navbar';
 
@@ -70,6 +70,7 @@ function App() {
           <Route exact path="/logout" component={LogOut} />
           <Route component={NotFound} />
         </Switch>
+        <Footer />
       </UserContext.Provider>
     </div>
   );

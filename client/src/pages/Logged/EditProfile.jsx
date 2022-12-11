@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { updateUser } from '../../api';
 
 function EditProfile({ getUser }) {
@@ -10,6 +11,8 @@ function EditProfile({ getUser }) {
   useEffect(() => {
     setUser(UserContext);
   }, []);
+
+  const history = useHistory();
 
   const [users, setUsers] = useState({
     username: '',
@@ -57,6 +60,8 @@ function EditProfile({ getUser }) {
     updateUser(users)
       .then((res) => {
         console.log(res);
+        history.push('/myprofile');
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +74,6 @@ function EditProfile({ getUser }) {
   } = users;
   return (
     <div className="h-screen bg-gray-100/50">
-      <h1>Edit Profile</h1>
       <form
         onSubmit={handleSubmit}
         className="container max-w-2xl mx-auto shadow-md md:w-3/4"
