@@ -1,19 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { fetchUserById } from '../../api';
 
-function MyProfile() {
+function MyProfile({ getUser }) {
   const [user, setUser] = useState([]);
+  const UserContext = useContext(getUser);
 
   useEffect(() => {
-    fetchUserById()
-      .then((res) => {
-        setUser([res.data]);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setUser([UserContext]);
   }, []);
 
   const history = useHistory();
@@ -64,5 +58,9 @@ function MyProfile() {
     </div>
   );
 }
+
+MyProfile.propTypes = {
+  getUser: PropTypes.func.isRequired,
+};
 
 export default MyProfile;

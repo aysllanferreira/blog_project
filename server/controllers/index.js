@@ -119,6 +119,7 @@ export const loginUser = async (req, res) => {
     // Header: Authorization
     res.setHeader('Authorization', `Bearer ${token}`);
     const getToken = jwt.decode(token, process.env.JWT_SECRET);
+    if (!getToken) return res.status(400).json({ message: 'Token is invalid' });
     const getId = getToken.id;
     const user = await User.findById(getId);
     const { id } = user;
@@ -175,6 +176,7 @@ export const getUser = async (req, res) => {
 export const fetchUserById = async (req, res) => {
   const token = req.headers.authorization.split(' ')[1];
   const getToken = jwt.decode(token, process.env.JWT_SECRET);
+  if (!getToken) return res.status(401).json({ message: 'Unauthorized' });
   const getId = getToken.id;
   const user = await User.findById(getId);
   const {
@@ -208,6 +210,7 @@ export const fetchUserById = async (req, res) => {
 export const updateUser = async (req, res) => {
   const token = req.headers.authorization.split(' ')[1];
   const getToken = jwt.decode(token, process.env.JWT_SECRET);
+  if (!getToken) return res.status(401).json({ message: 'Unauthorized' });
   const getId = getToken.id;
   const user = await User.findById(getId);
 

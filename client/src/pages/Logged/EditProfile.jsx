@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { updateUser, fetchUserById } from '../../api';
+import React, { useState, useEffect, useContext } from 'react';
+import PropTypes from 'prop-types';
+import { updateUser } from '../../api';
 
-function EditProfile() {
+function EditProfile({ getUser }) {
   const [user, setUser] = useState({});
   const [isDone, setIsDone] = useState(true);
+  const UserContext = useContext(getUser);
 
   useEffect(() => {
-    fetchUserById()
-      .then((res) => {
-        setUser(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setUser(UserContext);
   }, []);
 
   const [users, setUsers] = useState({
@@ -190,5 +185,9 @@ function EditProfile() {
     </div>
   );
 }
+
+EditProfile.propTypes = {
+  getUser: PropTypes.func.isRequired,
+};
 
 export default EditProfile;
