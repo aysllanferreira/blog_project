@@ -1,33 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { privateRoute } from '../api';
+import React from 'react';
 
 function Welcome() {
-  const [redirect, setRedirect] = useState(false);
-
-  useEffect(() => {
-    if (sessionStorage.getItem('token')) {
-      // check if token is valid
-      privateRoute()
-        .then((response) => {
-          if (response.status === 200) {
-            console.log('Welcome');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setRedirect(true);
-          sessionStorage.removeItem('token');
-        });
-    } else {
-      setRedirect(true);
-    }
-  }, []);
-
   return (
     <div>
       <h1>Welcome</h1>
-      {redirect && <Redirect to="/login" />}
+
     </div>
   );
 }

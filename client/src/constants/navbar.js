@@ -15,6 +15,10 @@ const DUMMY_NAVBAR_LOGIN = [{
   name: 'Home',
   link: '/welcome',
 },
+{
+  name: 'Log Out',
+  link: '/logout',
+},
 ];
 
 export { DUMMY_NAVBAR_NOLOGIN, DUMMY_NAVBAR_LOGIN };

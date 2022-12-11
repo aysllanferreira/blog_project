@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { loginUser } from '../api';
 
 function Login() {
@@ -13,8 +12,6 @@ function Login() {
     error: false,
     message: '',
   });
-
-  const [redirect, setRedirect] = useState(false);
 
   const handleChange = ({ target }) => {
     setUser({
@@ -34,8 +31,7 @@ function Login() {
       if (response.status === 200) {
         // Save the token in session Storage
         sessionStorage.setItem('token', response.data.token);
-        // Redirect to the welcome page
-        setRedirect(true);
+        window.location.href = '/welcome';
       }
     } catch (error) {
       setErrors({
@@ -129,7 +125,7 @@ function Login() {
           )}
         </div>
       </div>
-      {redirect && <Redirect to="/welcome" />}
+
     </div>
   );
 }
