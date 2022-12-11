@@ -1,9 +1,9 @@
 import Home from './Home';
 import Login from './Login';
 import Register from './Register';
-import Welcome from './Welcome';
+import Welcome from './Logged/Welcome';
 import NotFound from './NotFound';
-import LogOut from './LogOut';
+import LogOut from './Logged/LogOut';
 
 export {
   Home, Login, Register, Welcome, NotFound,

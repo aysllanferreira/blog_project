@@ -8,15 +8,16 @@ import {
 import Navbar from './components/navbar/Navbar';
 
 function App() {
-  const [redirect, setRedirect] = useState(false);
+  const [redirect, setRedirect] = useState(true);
 
   useEffect(() => {
-    if (sessionStorage.getItem('token')) {
+    if (sessionStorage.getItem('token') !== null) {
       // check if token is valid
       privateRoute()
         .then((response) => {
           if (response.status === 200) {
             console.log('Welcome');
+            setRedirect(false);
           }
         })
         .catch((error) => {
